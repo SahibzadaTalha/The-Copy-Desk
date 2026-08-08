@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Copy Desk — Automated Copywriting &amp; Tone Transformer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="eyebrow">Project 02 · DecodeLabs · Generative AI Engineering</div>
+    <h1>The <em>Copy</em> Desk</h1>
+    <p>Feed it a product and a platform. It compiles the brief, tunes the model's creativity, and returns copy ready to ship.</p>
+  </header>
+
+  <form class="ticket" id="copy-form">
+    <div class="ticket-header">
+      <h2>Intake</h2>
+      <span class="tag">01 / Fill the brief</span>
+    </div>
+
+    <div class="field">
+      <label for="product">Product name</label>
+      <input type="text" id="product" name="product" placeholder="e.g. Wireless Headphones" autocomplete="off">
+    </div>
+
+    <div class="field">
+      <label for="description">Description &amp; facts</label>
+      <textarea id="description" name="description" placeholder="e.g. 40hr battery, adaptive ANC, USB-C fast charge"></textarea>
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label>Platform(s)</label>
+        <div class="stamp-group" id="platform-stamps">
+          {% for key, profile in platforms.items() %}
+          <button type="button" class="stamp{% if loop.first %} active{% endif %}" data-platform="{{ key }}">{{ profile.name }}</button>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="tone">Tone</label>
+        <select id="tone" name="tone">
+          {% for key in tones.keys() %}
+          <option value="{{ key }}">{{ key|capitalize }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+
+    <div class="switch-row">
+      <label class="switch">
+        <input type="checkbox" id="compare-mode">
+        <span class="switch-track"></span>
+      </label>
+      <span>
+        <span class="label-text">Compare temperature levels</span>
+        <span class="label-sub">Conservative / Balanced / Creative, side by side, on one platform</span>
+      </span>
+    </div>
+
+    <button type="submit" class="btn-generate" id="generate-btn">Generate copy</button>
+    <div class="hint" id="form-hint"></div>
+  </form>
+
+  <div id="loading" class="loading-row" style="display:none;">
+    <span class="spinner"></span>
+    <span id="loading-text">Compiling prompt and calling the model…</span>
+  </div>
+
+  <div id="error-container"></div>
+
+  <section class="results" id="results-section" style="display:none;">
+    <div class="results-header">
+      <h2 id="results-title">Results</h2>
+      <span class="tag" style="font-family: var(--font-mono); font-size:11px; color: var(--paper-faint);">02 / Review &amp; ship</span>
+    </div>
+    <div class="results-grid" id="results-grid"></div>
+  </section>
+
+  <div id="empty-state" class="empty-state">Nothing generated yet — fill the intake above and press Generate.</div>
+
+  <footer>The Copy Desk — Automated Copywriting &amp; Tone Transformer · Built for DecodeLabs Project 2</footer>
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
