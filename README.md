@@ -71,7 +71,7 @@ Note: Make sure the frontend folder is named static (not stxtic) because Flask s
 
 1. Clone the repository
 
-git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY.git
+git clone https://git remote add origin https://github.com/SahibzadaTalha/The-Copy-Desk
 cd YOUR-REPOSITORY
 
 2. Create a virtual environment
